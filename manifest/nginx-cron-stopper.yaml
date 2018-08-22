@@ -1,10 +1,12 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: boink-stopper
+  name: nginx-stopper
   namespace: test
 spec:
-  schedule: "*/1 * * * *"
+  schedule: "43 6 * * *"
+  startingDeadlineSeconds: 10
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:      
       template:

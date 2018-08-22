@@ -1,0 +1,20 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: nginx-starter
+  namespace: test
+spec:
+  schedule: "46 6 * * *"
+  startingDeadlineSeconds: 10
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:      
+      template:
+        spec:
+          serviceAccountName: boink
+          containers:
+          - name: boink
+            image: boink:1.0
+            command: ["/boink"]
+            args: ["--namespace","test", "--label", "app=nginx", "--action" , "start"]
+          restartPolicy: OnFailure
