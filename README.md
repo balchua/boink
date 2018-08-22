@@ -75,10 +75,13 @@ Pair this tool with kubernetes `CronJob` to automatically stop or start a `Deplo
     apiVersion: batch/v1beta1
     kind: CronJob
     metadata:
-      name: boink-stopper
+      name: nginx-starter
       namespace: test
     spec:
-      schedule: "*/1 * * * *"
+      #this is in UTC
+      schedule: "46 6 * * *"
+      startingDeadlineSeconds: 10
+      concurrencyPolicy: Forbid
       jobTemplate:
         spec:      
           template:
@@ -88,7 +91,7 @@ Pair this tool with kubernetes `CronJob` to automatically stop or start a `Deplo
               - name: boink
                 image: boink:1.0
                 command: ["/boink"]
-                args: ["--namespace","test", "--label", "app=nginx", "--action" , "stop"]
+                args: ["--namespace","test", "--label", "app=nginx", "--action" , "start"]
               restartPolicy: OnFailure
     ```
 

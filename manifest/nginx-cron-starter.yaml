@@ -4,6 +4,7 @@ metadata:
   name: nginx-starter
   namespace: test
 spec:
+  #this is in UTC
   schedule: "46 6 * * *"
   startingDeadlineSeconds: 10
   concurrencyPolicy: Forbid
