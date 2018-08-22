@@ -4,7 +4,7 @@
 *.dll
 *.so
 *.dylib
-go-k8s
+boink
 
 # Test binary, build with `go test -c`
 *.test
