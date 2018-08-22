@@ -11,18 +11,18 @@ Pair this tool with kubernetes `CronJob` to automatically stop or start a `Deplo
 1. Outside of the cluster - This is a normal executable program to interact with kubernetes cluster.  You can use minikube.
 
     Arguments:
-    - --config - The location of KUBECONFIG
+    - --config - The location of $KUBECONFIG
     - --namespace - The namespace to use.
     - --label - Specify the selectors.
     - --action - Action to do, possible values `stop`, `start`
 
     To Stop:
 
-       boink --config &KUBECONFIG --namespace test --label app=nginx --action stop
+       boink --config $KUBECONFIG --namespace test --label app=nginx --action stop
 
     To Start:
         
-       boink --config &KUBECONFIG --namespace test --label app=nginx --action start
+       boink --config $KUBECONFIG --namespace test --label app=nginx --action start
 
 2.  In cluster
 
@@ -78,7 +78,7 @@ Pair this tool with kubernetes `CronJob` to automatically stop or start a `Deplo
       name: nginx-starter
       namespace: test
     spec:
-      #this is in UTC
+      #this is in UTC  will run at 6:46 AM everyday
       schedule: "46 6 * * *"
       startingDeadlineSeconds: 10
       concurrencyPolicy: Forbid
