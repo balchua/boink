@@ -32,7 +32,7 @@ func scaleToZero(deployment appsv1.Deployment, deploymentClient v1.DeploymentInt
 		deployment.Spec.Replicas = int32Ptr(0)
 		deploymentClient.Update(&deployment)
 	} else {
-		logrus.Infof("Deployment (%s) is already scaled to zero", deployment.ObjectMeta.Name)
+		logrus.Infof("Deployment (%s) is already scaled to (0)", deployment.ObjectMeta.Name)
 	}
 
 }

@@ -1,0 +1,11 @@
+apiVersion: skaffold/v1alpha2
+kind: Config
+build:
+  artifacts:
+  - imageName: boink
+deploy:
+  kubectl:
+    manifests:
+      - manifest/rbac.yaml
+      - manifest/nginx-cron-starter.yaml
+      - manifest/nginx-cron-stopper.yaml

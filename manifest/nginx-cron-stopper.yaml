@@ -15,7 +15,7 @@ spec:
           serviceAccountName: boink
           containers:
           - name: boink
-            image: boink:1.0
+            image: boink
             command: ["/boink"]
             args: ["--namespace","test", "--label", "app=nginx", "--action" , "stop"]
           restartPolicy: OnFailure

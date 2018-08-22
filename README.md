@@ -113,7 +113,5 @@ Check the `Gopkg.toml` to see all the dependencies.
 4. Do `go build`
 5. Finally to run the application `boink --config &KUBECONFIG --namespace test --label app=nginx --action stop`.  
 
-** If you need cluster admin, make sure you have the necessary administrator rights on the cluster.
 
-
-
+If you are using skaffold, there is `skaffold.yaml` included at the root of the project.  Simply do a `skaffold dev` from the `$GOPATH/src/boink` and you are good to go.

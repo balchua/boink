@@ -39,6 +39,7 @@ func init() {
 
 func main() {
 	app := cli.NewApp()
+	app.Description = "Boink an application to bounce your apps in Kubernetes."
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:        "config, c",
