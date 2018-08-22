@@ -42,14 +42,14 @@ func main() {
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:        "config, c",
-			Usage:       "Kube config path for outside of cluster access",
+			Usage:       "Kube config path for  outside of cluster access",
 			Destination: &pathToConfig,
 		},
 
 		cli.StringFlag{
 			Name:        "namespace, n",
 			Value:       "default",
-			Usage:       "the namespace where the application will poll the service.",
+			Usage:       "the namespace  where the application will poll the service.",
 			Destination: &namespace,
 		},
 		cli.StringFlag{
@@ -73,8 +73,12 @@ func main() {
 			logrus.Error(err)
 			return err
 		}
-		return manageDeployments()
+		err = manageDeployments()
 
+		if err != nil {
+			panic(err)
+		}
+		return nil
 	}
 	app.Run(os.Args)
 }

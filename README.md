@@ -1,17 +1,98 @@
-# go-k8s
-This is a sample code to interact with Kubernetes using client-go.
+# Boink
+Boink is a simple Go client application that can handle stopping and starting Kubernetes `Deployments`.
+It works by selecting `Deployments` based on labels.  It can also remember the previous known replicas, unlike a standard `kubectl scale` command where you need to specify the replicas manually.
 
-Two ways to run the application:
-1. out of the cluster - This is a normal executable program to interact with kubernetes cluster.  You can use minikube.
-
-2.  In cluster - TODO 
+This tool can be helpful when you have certain applications which needs to be stopped during certain period of time.
+Pair this tool with kubernetes `CronJob` to automatically stop or start a `Deployment`
 
 
-## What the application does
+## How to run the application
 
-The application polls all the services in the `<your namespace>` namespace and gets all the kubernetes services in that namespace.  After which the application checks if the service contains the annotation `sample.com/job-orchestrator` is set to `true`.
+1. Outside of the cluster - This is a normal executable program to interact with kubernetes cluster.  You can use minikube.
 
-This is a preclude to the possibility of performing actions when services with such annotations exist.
+    Arguments:
+    - --config - The location of KUBECONFIG
+    - --namespace - The namespace to use.
+    - --label - Specify the selectors.
+    - --action - Action to do, possible values `stop`, `start`
+
+    To Stop:
+
+       boink --config &KUBECONFIG --namespace test --label app=nginx --action stop
+
+    To Start:
+        
+       boink --config &KUBECONFIG --namespace test --label app=nginx --action start
+
+2.  In cluster
+
+    Make sure you have the right permission in the cluster.  See samples in `manifest/` folder.
+    
+    1. Create the `ServiceAccount`
+
+    ```
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: boink
+      namespace: test
+    ```
+
+    2. Create the `ClusterRole`
+
+    ```
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRole
+    metadata:
+    name: boink
+    rules:
+    - apiGroups: ["extensions","apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+    ```
+
+    3.  Bind the Cluster role with the service account
+
+    ```
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+        name: boink        
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: boink
+    subjects:
+    - kind: ServiceAccount
+      name: boink
+      namespace: test
+    ```
+
+    4.  Create the `CronJob`, Stop `Deployment` with label `app=nginx` every  minute.
+
+    ```
+    apiVersion: batch/v1beta1
+    kind: CronJob
+    metadata:
+      name: boink-stopper
+      namespace: test
+    spec:
+      schedule: "*/1 * * * *"
+      jobTemplate:
+        spec:      
+          template:
+            spec:
+              serviceAccountName: boink
+              containers:
+              - name: boink
+                image: boink:1.0
+                command: ["/boink"]
+                args: ["--namespace","test", "--label", "app=nginx", "--action" , "stop"]
+              restartPolicy: OnFailure
+    ```
+
+
 
 ### Tools:
 1. command line library using `github.com/urfave:v1.18.0`.  This library makes it easy to create a command line application in `Go`.
@@ -24,10 +105,10 @@ Check the `Gopkg.toml` to see all the dependencies.
 
 ## To build and run 
 1. Make sure you have `dep` installed in your system
-2. Go to the working directory `$GOPATH/src/go-k8s/`.
+2. Go to the working directory `$GOPATH/src/boink/`.
 3. Update all the dependencies using `dep ensure` to update all the dependencies.
 4. Do `go build`
-5. Finally to run the application `./go-k8s --config $KUBECONFIG --namespace <yournamespace>`.  This allows the application to retrieve the kubernetes configuration.
+5. Finally to run the application `boink --config &KUBECONFIG --namespace test --label app=nginx --action stop`.  
 
 ** If you need cluster admin, make sure you have the necessary administrator rights on the cluster.
 
