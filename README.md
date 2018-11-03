@@ -104,10 +104,10 @@ Pair this tool with kubernetes `CronJob` to automatically stop or start a `Deplo
 
 3.  `github.com/Sirupsen/logrus` - Standard logging mechanism for `Go`.
 
-Check the `Gopkg.toml` to see all the dependencies.
+Check the `go.mod` to see all the dependencies.
 
 ## To build and run 
-1. Make sure you have `dep` installed in your system
+1. Make sure you enable `$GO111MODULE` to `on`
 2. Go to the working directory `$GOPATH/src/boink/`.
 3. Update all the dependencies using `dep ensure` to update all the dependencies.
 4. Do `go build`
