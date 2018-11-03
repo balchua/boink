@@ -7,6 +7,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
+	"github.com/Sirupsen/logrus"
 	"k8s.io/client-go/kubernetes/fake"
 )
 
@@ -110,18 +111,19 @@ func TestHandleDeploymentScaleUpWithNoReplicas(t *testing.T) {
 }
 
 func TestHandleDeploymentScaleUpWithTargetReplicas(t *testing.T) {
+
 	// Create the fake client.
 	client := fake.NewSimpleClientset()
 
 	deploymentClient := client.AppsV1().Deployments("default")
 	annotation := map[string]string{"bal.io/target-replicas": "5"}
 	deployment := createDeployment(0, annotation)
+	logrus.Infof("replicas: %d", *deployment.Spec.Replicas)
 	_, err := deploymentClient.Create(deployment)
 
 	if err != nil {
 		t.Error("failed test.")
 	}
-
 	HandleDeployment(*deployment, deploymentClient, "start")
 
 }
