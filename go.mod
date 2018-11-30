@@ -26,6 +26,7 @@ require (
 	github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742
 	github.com/petar/GoLLRB v0.0.0-20130427215148-53be0d36a84c
 	github.com/peterbourgon/diskv v2.0.1+incompatible
+	github.com/spf13/cobra v0.0.3
 	github.com/spf13/pflag v1.0.2
 	github.com/urfave/cli v1.20.0
 	golang.org/x/crypto v0.0.0-20180820150726-614d502a4dac
