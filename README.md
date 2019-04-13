@@ -10,19 +10,23 @@ Pair this tool with kubernetes `CronJob` to automatically stop or start a `Deplo
 
 1. Outside of the cluster - This is a normal executable program to interact with kubernetes cluster.  You can use minikube.
 
+    Commands:
+    - start - To start deployments
+    - stop - To stop deployments
+
     Arguments:
     - --config - The location of $KUBECONFIG
     - --namespace - The namespace to use.
     - --label - Specify the selectors.
-    - --action - Action to do, possible values `stop`, `start`
+    
 
     To Stop:
 
-       boink --config $KUBECONFIG --namespace test --label app=nginx --action stop
+       boink stop --config $KUBECONFIG --namespace test --label app=nginx
 
     To Start:
         
-       boink --config $KUBECONFIG --namespace test --label app=nginx --action start
+       boink start --config $KUBECONFIG --namespace test --label app=nginx
 
 2.  In cluster
 
@@ -102,7 +106,7 @@ Pair this tool with kubernetes `CronJob` to automatically stop or start a `Deplo
 
 2.  Uses client-go to interact with kubernetes cluster.
 
-3.  `github.com/Sirupsen/logrus` - Standard logging mechanism for `Go`.
+3.  `github.com/sirupsen/logrus` - Standard logging mechanism for `Go`.
 
 Check the `go.mod` to see all the dependencies.
 

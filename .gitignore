@@ -5,6 +5,7 @@
 *.so
 *.dylib
 boink
+**/hacks/*
 
 # Test binary, build with `go test -c`
 *.test
