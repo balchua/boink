@@ -1,4 +1,6 @@
 # Boink
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fbalchua%2Fboink.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fbalchua%2Fboink?ref=badge_shield)
+
 Boink is a simple Go client application that can handle stopping and starting Kubernetes `Deployments`.
 It works by selecting `Deployments` based on labels.  It can also remember the previous known replicas, unlike a standard `kubectl scale` command where you need to specify the replicas manually.
 
