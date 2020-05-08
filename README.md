@@ -1,4 +1,6 @@
 # Boink
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbalchua%2Fboink.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbalchua%2Fboink?ref=badge_shield)
+
 Boink is a simple Go client application that can handle stopping and starting Kubernetes `Deployments`.
 It works by selecting `Deployments` based on labels.  It can also remember the previous known replicas, unlike a standard `kubectl scale` command where you need to specify the replicas manually.
 
@@ -121,3 +123,7 @@ Check the `go.mod` to see all the dependencies.
 
 If you are using skaffold, there is `skaffold.yaml` included at the root of the project.  Simply do a `skaffold dev` from the `$GOPATH/src/boink` and you are good to go.
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbalchua%2Fboink.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbalchua%2Fboink?ref=badge_large)
