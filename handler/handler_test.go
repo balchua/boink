@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"testing"
 
 	appsv1 "k8s.io/api/apps/v1"
@@ -59,7 +60,7 @@ func TestHandleDeploymentScaleDown(t *testing.T) {
 
 	deploymentClient := client.AppsV1().Deployments("default")
 	deployment := createDeployment(2, make(map[string]string))
-	_, err := deploymentClient.Create(deployment)
+	_, err := deploymentClient.Create(context.TODO(), deployment, metav1.CreateOptions{})
 
 	if err != nil {
 		t.Error("failed test.")
@@ -77,14 +78,14 @@ func TestHandleDeploymentScaleDownTwice(t *testing.T) {
 
 	deploymentClient := client.AppsV1().Deployments("default")
 	deployment := createDeployment(2, make(map[string]string))
-	_, err := deploymentClient.Create(deployment)
+	_, err := deploymentClient.Create(context.TODO(), deployment, metav1.CreateOptions{})
 
 	if err != nil {
 		t.Error("failed test.")
 	}
 
 	HandleDeployment(*deployment, deploymentClient, "stop")
-	deployments, err := deploymentClient.List(metav1.ListOptions{})
+	deployments, err := deploymentClient.List(context.TODO(), metav1.ListOptions{})
 	for _, deployment := range deployments.Items {
 
 		HandleDeployment(deployment, deploymentClient, "stop")
@@ -100,7 +101,7 @@ func TestHandleDeploymentScaleUpWithNoReplicas(t *testing.T) {
 
 	deploymentClient := client.AppsV1().Deployments("default")
 	deployment := createDeployment(2, make(map[string]string))
-	_, err := deploymentClient.Create(deployment)
+	_, err := deploymentClient.Create(context.TODO(), deployment, metav1.CreateOptions{})
 
 	if err != nil {
 		t.Error("failed test.")
@@ -119,7 +120,7 @@ func TestHandleDeploymentScaleUpWithTargetReplicas(t *testing.T) {
 	annotation := map[string]string{"bal.io/target-replicas": "5"}
 	deployment := createDeployment(0, annotation)
 	logrus.Infof("replicas: %d", *deployment.Spec.Replicas)
-	_, err := deploymentClient.Create(deployment)
+	_, err := deploymentClient.Create(context.TODO(), deployment, metav1.CreateOptions{})
 
 	if err != nil {
 		t.Error("failed test.")

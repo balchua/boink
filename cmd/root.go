@@ -1,12 +1,13 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"os"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"k8s.io/api/apps/v1"
+	v1 "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -87,7 +88,7 @@ func getDeployments() (*v1.DeploymentList, error) {
 	} else {
 		listOptions = metav1.ListOptions{}
 	}
-	deployments, err := deploymentClient.List(listOptions)
+	deployments, err := deploymentClient.List(context.TODO(), listOptions)
 	if err != nil {
 		logrus.Warnf("Failed to find deployments: %v", err)
 		return nil, err

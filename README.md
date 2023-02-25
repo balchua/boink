@@ -113,10 +113,9 @@ Check the `go.mod` to see all the dependencies.
 ## To build and run 
 1. Make sure you enable `$GO111MODULE` to `on`
 2. Go to the working directory `$GOPATH/src/boink/`.
-3. Update all the dependencies using `dep ensure` to update all the dependencies.
-4. Do `go build`
-5. Do `go test ./... -cover` to run unit test with code coverage.
-6. Finally to run the application `boink --config &KUBECONFIG --namespace test --label app=nginx --action stop`.  
+3. Do `go build`
+4. Do `go test ./... -cover` to run unit test with code coverage.
+5. Finally to run the application `boink --config $KUBECONFIG --namespace test --label app=nginx stop`.  
 
 
 If you are using skaffold, there is `skaffold.yaml` included at the root of the project.  Simply do a `skaffold dev` from the `$GOPATH/src/boink` and you are good to go.

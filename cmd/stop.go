@@ -4,6 +4,7 @@ import (
 	"boink/handler"
 	"fmt"
 
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"k8s.io/client-go/util/retry"
 )
@@ -18,6 +19,9 @@ var stopCmd = &cobra.Command{
 		deployments, err := getDeployments()
 		if err != nil {
 			panic(err)
+		}
+		if len(deployments.Items) == 0 {
+			logrus.Error("no deployment found")
 		}
 		for _, deployment := range deployments.Items {
 			retryErr := retry.RetryOnConflict(retry.DefaultRetry, func() error {
