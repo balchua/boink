@@ -1,11 +1,17 @@
 apiVersion: skaffold/v4beta2
 kind: Config
 build:
+  tagPolicy:
+    gitCommit: {}
   artifacts:
-  - imageName: boink
-deploy:
-  kubectl:
-    manifests:
-      - manifest/rbac.yaml
-      - manifest/nginx-cron-starter.yaml
-      - manifest/nginx-cron-stopper.yaml
+  - image: balchu/boink
+    ko:
+      dependencies:
+        paths:
+        - "**/*.go"
+        - go.*  
+manifests:
+  rawYaml:
+    - manifest/rbac.yaml
+    - manifest/nginx-cron-starter.yaml
+    - manifest/nginx-cron-stopper.yaml

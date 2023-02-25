@@ -102,7 +102,7 @@ Pair this tool with kubernetes `CronJob` to automatically stop or start a `Deplo
 
 
 ### Tools:
-1. command line library using `github.com/urfave:v1.18.0`.  This library makes it easy to create a command line application in `Go`.
+1. command line library using `cobra`.  This library makes it easy to create a command line application in `Go`.
 
 2.  Uses client-go to interact with kubernetes cluster.
 

@@ -15,7 +15,7 @@ spec:
           serviceAccountName: boink
           containers:
           - name: boink
-            image: boink
+            image: balchu/boink:0.1-alpha-10-g5d04a1e-dirty
             command: ["/boink"]
             args: ["--namespace","test", "--label", "app=nginx", "--action" , "start"]
           restartPolicy: OnFailure
